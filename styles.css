@@ -7,7 +7,9 @@
   --border: #dfe4ea;
   --accent: #ed1b2f;
   --accent-dark: #bf1424;
+  --accent-soft: #fff1f3;
   --shadow: 0 18px 45px rgba(24, 34, 48, 0.08);
+  --shadow-strong: 0 24px 60px rgba(24, 34, 48, 0.12);
 }
 
 * {
@@ -24,6 +26,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   background:
+    linear-gradient(90deg, rgba(237, 27, 47, 0.06), transparent 24%, transparent 76%, rgba(237, 27, 47, 0.04)),
     linear-gradient(180deg, #ffffff 0%, var(--background) 46%, #ffffff 100%);
 }
 
@@ -42,6 +45,7 @@ a:hover {
   z-index: 10;
   background: rgba(255, 255, 255, 0.94);
   border-bottom: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(24, 34, 48, 0.04);
   backdrop-filter: blur(12px);
 }
 
@@ -97,11 +101,12 @@ a:hover {
 .nav-links a:hover,
 .nav-links a[aria-current="page"] {
   color: var(--text);
-  background: var(--surface-muted);
+  background: var(--accent-soft);
   text-decoration: none;
 }
 
 .hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(180px, 300px);
   align-items: center;
@@ -111,8 +116,20 @@ a:hover {
   padding: clamp(72px, 10vw, 128px) 0 clamp(54px, 8vw, 96px);
 }
 
+.hero::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(237, 27, 47, 0.32), transparent);
+  content: "";
+}
+
 .hero-copy {
   max-width: 760px;
+  padding-left: clamp(18px, 3vw, 28px);
+  border-left: 4px solid var(--accent);
 }
 
 .eyebrow {
@@ -150,7 +167,11 @@ h1 {
   justify-self: end;
   width: min(100%, 280px);
   height: auto;
-  filter: drop-shadow(var(--shadow));
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-strong);
 }
 
 .section,
@@ -199,8 +220,27 @@ h1 {
 }
 
 .service-card {
+  position: relative;
+  overflow: hidden;
   min-height: 210px;
   padding: 22px;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.service-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  content: "";
+}
+
+.service-card:hover {
+  border-color: rgba(237, 27, 47, 0.28);
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-2px);
 }
 
 .service-card h3 {
@@ -224,6 +264,7 @@ h1 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 0;
   overflow: hidden;
+  border-top: 3px solid var(--accent);
 }
 
 .contact-list div {
@@ -236,7 +277,7 @@ h1 {
 }
 
 .contact-list dt {
-  color: var(--muted);
+  color: var(--accent-dark);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.08em;
